@@ -1,0 +1,7 @@
+.content{
+    grid-area: CT;
+    background-color: var(--cor-primary);
+    color:var(--cor-white);
+    height: 100vh;
+    padding: 30px 20px;
+}

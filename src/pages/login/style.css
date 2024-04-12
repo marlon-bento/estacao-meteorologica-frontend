@@ -1,0 +1,60 @@
+.login{
+    background-color: #121212;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 100vh;
+    color: var(--cor-white);
+}
+.form-login{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.form-login {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.formulario{
+    min-width: 400px;
+    padding: 10px 20px;
+    border-radius: 30px;
+    background: rgba(196, 182, 182, 0.116);
+    color: white;
+    border-bottom: 2px solid var(--cor-gray) ;
+    outline: 0;
+}
+.formulario:focus{
+
+    border-bottom: 2px solid var(--cor-success) ;
+    
+}
+.link-login{
+    text-decoration: none;
+    color: var(--cor-success);
+}
+.botao-form{
+    padding: 10px;
+    border-radius: 40px;
+    background-color: var(--cor-info);
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+}
+.botao-form:hover{
+
+    background-color: var(--cor-info-hover);
+   
+}
+.login-cadastro{
+    font-size: 20px;
+    margin-left: 4px;
+    color: rgb(214, 212, 212);
+}
+.info-login{
+    font-size: 16px;
+    color: rgb(214, 212, 212);
+    text-align: center;
+}

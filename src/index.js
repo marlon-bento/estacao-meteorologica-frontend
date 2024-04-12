@@ -1,17 +1,31 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+
+
+import Login from './pages/login';
+
+import Dashboard from './pages/dashboard';
+import List from './pages/list';
+import Cadastro from './pages/cadastro';
+
+import {QueryClient, QueryClientProvider} from 'react-query'
+import Rotas from './routes';
+import { AuthProvider } from './utils/AuthContext.js';
+
+const queryClient = new QueryClient();
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <QueryClientProvider client={queryClient}>
+     
+        
+          <Rotas/>
+        
+      
+
+    </QueryClientProvider>
   </React.StrictMode>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();

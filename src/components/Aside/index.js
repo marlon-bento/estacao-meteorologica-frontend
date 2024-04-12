@@ -1,0 +1,42 @@
+import './style.css';
+import {Link} from 'react-router-dom';
+import Cookies from 'js-cookie';
+import { useContext } from 'react';
+import { AuthContext } from '../../utils/AuthContext.js';
+function Aside(){
+    const nomeDoUsuario = Cookies.get('name');
+    const {logout} = useContext(AuthContext);
+    function hundleLogout(){
+        logout();
+    }
+
+    return(
+        <div className='aside'>
+            <div className='login-aside'>
+                <h3>Estação Meteorológica</h3>
+                <img className='img-logado' src="../logado.jpg" alt="" />
+                <span>bem vindo {nomeDoUsuario}</span>
+
+
+                <div className='menu-aside'>
+                    <img src="" alt="" />
+                    <div className='menu'>
+                        <ul>
+                            <li><img className='icon-aside' src="../layout.png" alt="" /> <Link to='/' className='link-aside'>Dashboard</Link></li>
+                            <li><img className='icon-aside' src="../database-management.png" alt="" /><Link to='/list' className='link-aside'>Dados Armazenados</Link></li>
+                        </ul>
+                        <button onClick={hundleLogout} >Deslogar</button>
+                    </div>
+                </div>
+            </div>
+           
+
+            <div className='footer-aside'>
+                <h1>Trabalho iot2</h1>
+                <span>Puc Minas</span>
+            </div>
+
+        </div>
+    );
+}
+export default Aside;
