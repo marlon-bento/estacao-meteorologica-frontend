@@ -16,7 +16,7 @@ function List() {
     const {state}  = useLocation();
     const { data, isLoading, error } = useQuery("todos", () => {
         return axios
-            .get("ec2-18-116-89-63.us-east-2.compute.amazonaws.com:8080/api/v1/sensores")
+            .get("http://localhost:8080/api/v1/sensores")
             .then((response) => response.data);
     });
     console.log(data)
@@ -39,16 +39,22 @@ function List() {
             <div className='posicao'>
 
                 <Aside name = {state} />
-                <MainHeader page={"string"} />
+                <MainHeader page={"Histórico de Leitura"} />
                 <div className='list'>
                     <h1>Histórico de leituras</h1>
                     {
                         data.map((todo) => (
                             <div key={todo.id} className="sensores">
-                                <h1> Sensor de temperatura: <span className="valorSensor">{todo.sensorTemp}</span></h1>
-                                <h1> Sensor de umidade: <span className="valorSensor">{todo.sensorUmidade}</span></h1>
-                                <h1> Sensor de pressão: <span className="valorSensor">{todo.sensorPressao}</span></h1>
-                                <h1> data de salvamento: {formatar_data(todo.dataCriacao)}</h1>
+                                <div className="sensores-valores">
+                                    <h1> Sensor de temperatura: <span className="valorSensor">{todo.sensorTemp}</span></h1>
+                                    <h1> Sensor de umidade: <span className="valorSensor">{todo.sensorUmidade}</span></h1>
+                                    <h1> Sensor de pressão: <span className="valorSensor">{todo.sensorPressao}</span></h1>
+                                
+                                </div>
+                                <div>
+                                    <h1 id="bold" > data de salvamento: {formatar_data(todo.dataCriacao)}</h1>
+                                </div>
+
                             </div>
                         ))
                     }

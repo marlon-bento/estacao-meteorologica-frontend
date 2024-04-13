@@ -1,8 +1,8 @@
 import './style.css'
-function MainHeader(){
+function MainHeader({page}){
     return(
         <div className='mainHeader'>
-            <h1>MainHeader</h1>
+            <h1>{page}</h1>
         </div>
     );
 }

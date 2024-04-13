@@ -24,7 +24,7 @@ function Login() {
 
     const mutation = useMutation(
         async (loginData) => {
-            const response = await axios.post('ec2-18-116-89-63.us-east-2.compute.amazonaws.com:8080/api/v1/usuarios/login', loginData);
+            const response = await axios.post('http://localhost:8080/api/v1/usuarios/login', loginData);
             return response.data;
         }
     );

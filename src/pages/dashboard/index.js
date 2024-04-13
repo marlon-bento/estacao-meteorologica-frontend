@@ -10,7 +10,7 @@ function Dashboard (){
          <div className='posicao'>
             
             <Aside/>
-            <MainHeader page={"string"}/>
+            <MainHeader page={"Dashboard"}/>
             <div className='dashboard'>
                 h1
             </div>
