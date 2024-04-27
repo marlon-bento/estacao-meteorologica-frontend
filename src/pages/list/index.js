@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+
 import './style.css'
 import { useQuery } from "react-query";
 import {useLocation, useNavigate} from "react-router-dom";
@@ -46,7 +46,7 @@ function List() {
                         data.map((todo) => (
                             <div key={todo.id} className="sensores">
                                 <div className="sensores-valores">
-                                    <h1> Sensor de temperatura: <span className="valorSensor">{todo.sensorTemp}</span></h1>
+                                    <h1> Sensor de temperatura: <span className="valorSensor">{todo.sensorTemp + " °C"}</span></h1>
                                     <h1> Sensor de umidade: <span className="valorSensor">{todo.sensorUmidade}</span></h1>
                                     <h1> Sensor de pressão: <span className="valorSensor">{todo.sensorPressao}</span></h1>
                                 

@@ -23,3 +23,11 @@ button{
 .text{
     color: white;
 }
+body{
+    background-color: var(--cor-primary);
+
+}
+.grafico-bar-temp-umi{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
