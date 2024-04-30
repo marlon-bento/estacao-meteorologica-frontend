@@ -24,7 +24,7 @@ function Login() {
 
     const mutation = useMutation(
         async (loginData) => {
-            const response = await axios.post('http://localhost:8080/api/v1/usuarios/login', loginData);
+            const response = await axios.post('https://estacao-meteorologica-backend.onrender.com/api/v1/usuarios/login', loginData);
             return response.data;
         }
     );

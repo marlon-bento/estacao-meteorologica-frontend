@@ -16,7 +16,7 @@ function List() {
     const {state}  = useLocation();
     const { data, isLoading, error } = useQuery("todos", () => {
         return axios
-            .get("http://localhost:8080/api/v1/sensores")
+            .get("https://estacao-meteorologica-backend.onrender.com/api/v1/sensores")
             .then((response) => response.data);
     });
     console.log(data)
