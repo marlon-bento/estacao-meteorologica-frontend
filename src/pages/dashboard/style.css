@@ -15,3 +15,69 @@
     height: 100vh;
     padding: 30px 20px;
 }
+.primeira-linha-graficos {
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    align-items: flex-start; /* Alinha os itens no topo */
+}
+
+.grid-item {
+    width: 100%; /* Garante que os itens ocupem toda a largura disponível */
+    max-width: 100%;
+}
+
+@media screen and (max-width: 1200px) {
+    .primeira-linha-graficos {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+.controls{
+    margin-top: 30px;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 20px;
+    justify-content: end;
+    align-items: center;
+}
+.filtrar-por{
+    font-size: 28px;
+    
+    color: rgb(250, 244, 244);
+}
+
+
+
+
+
+
+select {
+   
+    width: 200px; /* largura desejada */
+    padding: 8px 10px; /* espaçamento interno */
+    font-size: 16px; /* tamanho da fonte */
+    border: 1px solid #ccc; /* borda */
+    border-radius: 5px; /* borda arredondada */
+    background-color: #fff; /* cor de fundo */
+    color: #333; /* cor do texto */
+  }
+  
+  /* Estilizando as opções */
+  select option {
+    background-color: #fff; /* cor de fundo */
+    font-size: 16px;
+    color: #333; /* cor do texto */
+  }
+  
+  /* Estilizando a seta de dropdown */
+  select::-ms-expand {
+    display: none; /* oculta a seta no IE */
+  }
+  
+  /* Estilizando o texto selecionado */
+  select option:checked {
+    background-color: #f0f0f0; /* cor de fundo quando selecionado */
+  }
+
+

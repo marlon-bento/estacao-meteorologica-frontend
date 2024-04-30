@@ -29,7 +29,7 @@ export default function GraficoPizza({data}){
                         options={optionsPizza}
                         width={"100%"}
                         height={"400px"}
-                        padding = {"10px"}
+                        className="grid-item"
                     />
     
     );

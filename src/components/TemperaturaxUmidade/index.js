@@ -53,17 +53,18 @@ export default function TemperaturaxUmidade({ dados, intervalo }) {
 
 
 
-        <div className="grafico-bar-temp-umi">
-            {/* Renderiza o gráfico com os dados filtrados */}
+        
+           
             <Chart
                 chartType="Bar"
                 width="100%"
                 height="400px"
                 data={filtrarDados()}
                 options={options}
+                
 
             />
-        </div>
+        
 
     );
 }

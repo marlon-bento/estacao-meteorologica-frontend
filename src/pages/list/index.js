@@ -47,8 +47,8 @@ function List() {
                             <div key={todo.id} className="sensores">
                                 <div className="sensores-valores">
                                     <h1> Sensor de temperatura: <span className="valorSensor">{todo.sensorTemp + " °C"}</span></h1>
-                                    <h1> Sensor de umidade: <span className="valorSensor">{todo.sensorUmidade}</span></h1>
-                                    <h1> Sensor de pressão: <span className="valorSensor">{todo.sensorPressao}</span></h1>
+                                    <h1> Sensor de umidade: <span className="valorSensor">{todo.sensorUmidade + " %"}</span></h1>
+                                    <h1> Sensor de pressão: <span className="valorSensor">{todo.sensorPressao + " hPa"}</span></h1>
                                 
                                 </div>
                                 <div>

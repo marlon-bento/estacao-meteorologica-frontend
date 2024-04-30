@@ -1,30 +1,45 @@
-import Aside from '../../components/Aside';
-
-import MainHeader from '../../components/MainHeader';
-
-import './style.css';
+import { Chart } from "react-google-charts";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import TemperaturaxUmidade from '../../components/TemperaturaxUmidade';
-import GraficoPizza from '../../components/GraficoPizza';
-import { useState } from 'react';
 import { useQuery } from "react-query";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import Aside from "../../components/Aside";
+import MainHeader from "../../components/MainHeader";
+import "./style.css";
+import Mqtt from "../../components/Mqtt";
+import GraficoPizza from "../../components/GraficoPizza";
+import TemperaturaxUmidade from "../../components/TemperaturaxUmidade";
 
 function Dashboard() {
-    const navigate = useNavigate();
-    const [intervalo, setIntervalo] = useState("todo"); // Estado para controlar o intervalo selecionado
-
-
-
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+    const [showCharts, setShowCharts] = useState(true); // Estado para controlar a visibilidade dos gráficos
     const { state } = useLocation();
+    const [intervalo, setIntervalo] = useState("todo"); // Definindo a variável intervalo e a função setIntervalo
+
     const { data, isLoading, error } = useQuery("todos", () => {
         return axios
-            .get("https://estacao-meteorologica-backend.onrender.com/api/v1/sensores")
+            .get(
+                "https://estacao-meteorologica-backend.onrender.com/api/v1/sensores"
+            )
             .then((response) => response.data);
     });
 
+    useEffect(() => {
+        const handleResize = () => {
+            setWindowWidth(window.innerWidth);
+            setShowCharts(false); // Oculta os gráficos ao redimensionar a janela
+            setTimeout(() => setShowCharts(true), 500); // Mostra os gráficos após 500ms
+        };
+
+        window.addEventListener("resize", handleResize);
+
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
+
     if (isLoading) {
-        return <div className="loading">carregando...</div>
+        return <div className="loading">carregando...</div>;
     }
     if (error) {
         return (
@@ -35,64 +50,55 @@ function Dashboard() {
     }
 
     return (
-
-        <div className='posicao'>
-
+        <div className="posicao">
             <Aside />
             <MainHeader page={"Dashboard"} />
-            <div className='dashboard'>
+            <div className="dashboard">
+                <Mqtt />
                 <div className="controls">
-                    {/* Input select para escolher o intervalo */}
-                    <span>filtar por: </span>
-                    <select value={intervalo} onChange={e => setIntervalo(e.target.value)}>
-                        <option value="todo">Todo o histórico</option>
-                        <option value="este">Este Mês</option>
-                    </select>
+                    
+                    <span className="filtrar-por">Filtar por: </span>
+                    
+                        <select
+                            value={intervalo}
+                            onChange={(e) => setIntervalo(e.target.value)}
+                        >
+                            <option value="todo">Todo o histórico</option>
+                            <option value="este">Este Mês</option>
+                        </select>
+                   
+                  
                 </div>
-                <TemperaturaxUmidade dados={data} intervalo={intervalo} />
-                <GraficoPizza data={data} />
-                <div className='list'>
-                    <h1>Histórico de leituras</h1>
-                    {
-                        data.map((todo) => (
-                            <div key={todo.id} className="sensores">
-                                <div className="sensores-valores">
-                                    <h1> Sensor de temperatura: <span className="valorSensor">{todo.sensorTemp}</span></h1>
-                                    <h1> Sensor de umidade: <span className="valorSensor">{todo.sensorUmidade}</span></h1>
-                                    <h1> Sensor de pressão: <span className="valorSensor">{todo.sensorPressao}</span></h1>
+                <div className="primeira-linha-graficos">
 
-                                </div>
-                                <div>
-                                    <h1 id="bold" > data de salvamento: {formatar_data(todo.dataCriacao)}</h1>
-                                </div>
-
-                            </div>
-                        ))
-                    }
+                    <div className="grid-item" >
+                        {showCharts && (
+                            <TemperaturaxUmidade dados={data} intervalo={intervalo} />
+                        )}
+                    </div>
+                    <div className="grid-item" >
+                        {showCharts && <GraficoPizza data={data} />}
+                    </div>
                 </div>
-
+                
             </div>
-
-
-
         </div>
-
     );
-
 }
+
 function formatar_data(datestring) {
     const newDate = new Date(datestring);
     const options = {
-        weekday: 'short',
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric',
-        hour: 'numeric',
-        minute: 'numeric',
-        second: 'numeric',
-        timeZone: 'America/Sao_Paulo'
+        weekday: "short",
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+        timeZone: "America/Sao_Paulo",
     };
-    return newDate.toLocaleString('pt-BR', options);
+    return newDate.toLocaleString("pt-BR", options);
 }
 
 export default Dashboard;
