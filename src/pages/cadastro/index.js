@@ -33,13 +33,16 @@ function Cadastro() {
             navigate('/login');
         } catch (error) {
             console.error('Erro ao cadastrar:', error);
-            alert('Erro ao cadastrar. Por favor, tente novamente mais tarde.');
+            setIsSubmitting(false); // Resetar o estado para permitir novo envio
+            setName('');
+            setUsername('');
+            setPassword('');
+            if (error.response && error.response.status === 404) {
+                alert('Não foi possível conectar ao serviço de cadastro. Por favor, tente novamente mais tarde.');
+            } else {
+                alert('Erro ao cadastrar. Por favor, tente novamente mais tarde.');
+            }
         }
-
-        setIsSubmitting(false); // Marque como não enviando
-        setName('');
-        setUsername('');
-        setPassword('');
     };
 
     return (
