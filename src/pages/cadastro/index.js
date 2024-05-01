@@ -11,22 +11,24 @@ function Cadastro() {
 
     const handleCadastro = async (e) => {
         e.preventDefault();
-
+    
         if (!name.trim() || !username.trim() || !password.trim() || isSubmitting) {
             // Verifique se já está enviando o formulário antes de permitir o envio novamente
             return;
         }
-
+    
         setIsSubmitting(true); // Marque como enviando
-
+    
         const cadastroData = {
             name: name,
             username: username,
             password: password,
         };
-
+    
         try {
-            const response = await axios.post('https://estacao-meteorologica-backend.onrender.com/api/v1/usuarios/criar', cadastroData);
+            const response = await axios.post('https://estacao-meteorologica-backend.onrender.com/api/v1/usuarios/criar', cadastroData, {
+                timeout: 10000 // Tempo limite em milissegundos (10 segundos)
+            });
             
             alert('Cadastrado com sucesso!!!!');
             // Redirecione para a página de login após o cadastro bem-sucedido
@@ -37,13 +39,16 @@ function Cadastro() {
             setName('');
             setUsername('');
             setPassword('');
-            if (error.response && error.response.status === 404) {
+            if (error.code === 'ECONNABORTED') {
+                alert('Tempo limite excedido. O serviço de cadastro está indisponível no momento. Por favor, tente novamente mais tarde.');
+            } else if (error.response && error.response.status === 404) {
                 alert('Não foi possível conectar ao serviço de cadastro. Por favor, tente novamente mais tarde.');
             } else {
                 alert('Erro ao cadastrar. Por favor, tente novamente mais tarde.');
             }
         }
     };
+    
 
     return (
         <div className='login'>

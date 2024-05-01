@@ -3,7 +3,7 @@ import Login from '../pages/login';
 import Dashboard from '../pages/dashboard';
 import List from '../pages/list';
 import Cadastro from '../pages/cadastro';
-
+import NotFound from '../pages/NotFound';
 
 import PrivateRoutes from '../utils/PrivateRoutes';
 import { AuthProvider } from '../utils/AuthContext.js';
@@ -29,7 +29,7 @@ export default function Rotas() {
 
 
 
-                        <Route path='*' element={<h1 >pagina não existe</h1>} />
+                        <Route path='*' element={<NotFound />} />
                     
                 </Routes>
             </AuthProvider>
