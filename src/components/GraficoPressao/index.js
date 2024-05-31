@@ -1,51 +1,43 @@
-import React from "react";
 import { Chart } from "react-google-charts";
-import moment from 'moment';
-
-export default function TemperaturaxUmidade({ dados, intervalo }) {
-
-
-    // Função para filtrar os dados com base no intervalo selecionado
+import moment from "moment";
+export default function GraficoPressao({ dadosSensores, intervalo }) {
     const filtrarDados = () => {
-        let filteredData;
+        let filteredData = [];
 
         switch (intervalo) {
             case "todo":
-                filteredData = [["Todos dados", "Umidade", "Temperatura"]]
-                dados.forEach(item => {
+                dadosSensores.forEach(item => {
                     let dia = new Date(item.dataCriacao).getDate();
-                    filteredData.push(["Data " + moment(item.dataCriacao).format("DD/MM/YYYY"), item.sensorUmidade, item.sensorTemp]);
+                    filteredData.push({sensorPressao: item.sensorPressao });
                 });
                 break;
             case "ano":
-                filteredData = [["Ano atual", "Umidade", "Temperatura"]]
                 // Obter o mês e o ano atual
                 const dataAnual = new Date();
                 let ano = moment(dataAnual).format("YYYY")
 
 
-                dados.forEach(item => {
+                dadosSensores.forEach(item => {
                     let anoReferencia = moment(item.dataCriacao).format("YYYY")
 
                     if (ano === anoReferencia) {
-                        filteredData.push(["Dia " + moment(item.dataCriacao).format("DD"), item.sensorUmidade, item.sensorTemp]);
+                        filteredData.push({sensorPressao: item.sensorPressao });
                     }
 
 
                 });
                 break;
             case "mes":
-                filteredData = [["Mês atual", "Umidade", "Temperatura"]]
                 // Obter o mês e o ano atual
                 const dataAtual = new Date();
                 let mesAtual = moment(dataAtual).format("MM/YYYY")
 
 
-                dados.forEach(item => {
+                dadosSensores.forEach(item => {
                     let mesDado = moment(item.dataCriacao).format("MM/YYYY")
 
                     if (mesAtual === mesDado) {
-                        filteredData.push(["Dia " + moment(item.dataCriacao).format("DD"), item.sensorUmidade, item.sensorTemp]);
+                        filteredData.push({sensorPressao: item.sensorPressao});
                     }
 
 
@@ -57,29 +49,31 @@ export default function TemperaturaxUmidade({ dados, intervalo }) {
 
         return filteredData;
     };
-
-    // Opções para o gráfico
+    let data = []
+    data.push([
+        "Dia",
+        "Pressão"
+    ])
+    let dadosFiltrados = filtrarDados();
+    for (let i = 0; i < dadosFiltrados.length; i++) {
+        let dadoVetor;
+        dadoVetor = [moment(dadosFiltrados[i].dataCriacao).format("DD"), dadosFiltrados[i].sensorPressao];
+        data.push(dadoVetor);
+    }
     const options = {
-        title: "Temperatura x Umidade",
-
+        chart: {
+            title: "Grafico Pressão"
+        },
     };
 
+
     return (
-
-
-
-
-
         <Chart
-            chartType="Bar"
+            chartType="Line"
             width="100%"
             height="400px"
-            data={filtrarDados()}
+            data={data}
             options={options}
-
-
         />
-
-
     );
 }

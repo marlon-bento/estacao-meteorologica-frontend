@@ -9,6 +9,7 @@ import "./style.css";
 import Mqtt from "../../components/Mqtt";
 import GraficoPizza from "../../components/GraficoPizza";
 import TemperaturaxUmidade from "../../components/TemperaturaxUmidade";
+import GraficoPressao from "../../components/GraficoPressao";
 
 const Carregando = () => {
     return (
@@ -101,7 +102,8 @@ function Dashboard() {
                                             onChange={(e) => setIntervalo(e.target.value)}
                                         >
                                             <option value="todo">Todo o histórico</option>
-                                            <option value="este">Este Mês</option>
+                                            <option value="ano">Anual</option>
+                                            <option value="mes">Mensal</option>
                                         </select>
 
 
@@ -114,7 +116,15 @@ function Dashboard() {
                                             )}
                                         </div>
                                         <div className="grid-item" >
-                                            {showCharts && <GraficoPizza data={data} />}
+                                            {showCharts && <GraficoPizza data={data} intervalo={intervalo} />}
+                                        </div>
+                                    </div>
+                                    <div className="primeira-linha-graficos">
+
+                                        <div className="grid-item" >
+                                            {showCharts && (
+                                                <GraficoPressao dadosSensores={data} intervalo={intervalo}/>
+                                            )}
                                         </div>
                                     </div>
                                 </>

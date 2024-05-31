@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import mqtt from "mqtt";
 import './style.css';
+import axios from "axios";
+
 
 const Mqtt = () => {
   const [client, setClient] = useState(null);
   const [temperatura, setTemperatura] = useState(null);
   const [umidade, setUmidade] = useState(null);
   const [pressao, setPressao] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false); // Estado para controlar o envio dos dados
 
   useEffect(() => {
     const connectToMQTT = () => {
@@ -54,7 +57,40 @@ const Mqtt = () => {
     };
   }, []);
 
+  const handleSave = async (e) => {
+    e.preventDefault();
 
+    if (temperatura === null || umidade === null || pressao === null) {
+      alert("Não existe dados para serem salvos!")
+      return;
+    }
+
+    setIsSubmitting(true); // Marque como enviando
+
+    const cadastroSensor = {
+      sensorTemp: temperatura,
+      sensorUmidade: umidade,
+      sensorPressao: pressao
+    };
+    console.log(cadastroSensor);
+
+    try {
+        const response = await axios.post('https://estacao-meteorologica-backend.onrender.com/api/v1/sensores', cadastroSensor, {
+            timeout: 10000 // Tempo limite em milissegundos (10 segundos)
+        });
+        return alert("Dados enviados");
+    } catch (error) {
+        console.error('Erro ao enviar dados:', error);
+        setIsSubmitting(false); // Resetar o estado para permitir novo envio
+        if (error.code === 'ECONNABORTED') {
+            alert('Tempo limite excedido. O serviço de envio de dados está indisponível no momento. Por favor, tente novamente mais tarde.');
+        } else if (error.response && error.response.status === 404) {
+            alert('Não foi possível conectar ao serviço de dados. Por favor, tente novamente mais tarde.');
+        } else {
+            alert('Erro ao enviar dados. Por favor, tente novamente mais tarde.');
+        }
+    }
+};
   // Restante do código...
 
   return (
@@ -75,7 +111,9 @@ const Mqtt = () => {
         <p className="valor-sensor">{pressao === null? "?" : pressao + " hPa"}</p>
         
       </div>
-      
+    <div>
+      <button className="titulo-sensor button-save" onClick={handleSave}>Salvar</button>
+    </div>  
       
      
     </div>
