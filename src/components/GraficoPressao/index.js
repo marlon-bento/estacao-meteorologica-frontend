@@ -8,7 +8,7 @@ export default function GraficoPressao({ dadosSensores, intervalo }) {
             case "todo":
                 dadosSensores.forEach(item => {
                     let dia = new Date(item.dataCriacao).getDate();
-                    filteredData.push({sensorPressao: item.sensorPressao });
+                    filteredData.push({sensorPressao: item.sensorPressao, dataCriacao: item.dataCriacao });
                 });
                 break;
             case "ano":
@@ -21,7 +21,7 @@ export default function GraficoPressao({ dadosSensores, intervalo }) {
                     let anoReferencia = moment(item.dataCriacao).format("YYYY")
 
                     if (ano === anoReferencia) {
-                        filteredData.push({sensorPressao: item.sensorPressao });
+                        filteredData.push({sensorPressao: item.sensorPressao, dataCriacao: item.dataCriacao });
                     }
 
 
@@ -37,7 +37,7 @@ export default function GraficoPressao({ dadosSensores, intervalo }) {
                     let mesDado = moment(item.dataCriacao).format("MM/YYYY")
 
                     if (mesAtual === mesDado) {
-                        filteredData.push({sensorPressao: item.sensorPressao});
+                        filteredData.push({sensorPressao: item.sensorPressao, dataCriacao: item.dataCriacao});
                     }
 
 
@@ -60,6 +60,7 @@ export default function GraficoPressao({ dadosSensores, intervalo }) {
         dadoVetor = [moment(dadosFiltrados[i].dataCriacao).format("DD"), dadosFiltrados[i].sensorPressao];
         data.push(dadoVetor);
     }
+    console.log()
     const options = {
         chart: {
             title: "Grafico Pressão"
